@@ -40,10 +40,14 @@ public class ShulkerOpenListener implements Listener {
         if (event.getAction() != Action.RIGHT_CLICK_AIR) return;
 
         final Player player = event.getPlayer();
-        if (player.getInventory().getItemInOffHand().getType() != Material.AIR) {
-            player.sendMessage("[!] 왼손에 아이템을 든 상태로 열 수 없습니다!");
+
+        if ((player.getInventory().getItemInOffHand().getType() != Material.AIR
+                && player.getInventory().getItemInMainHand().getType().name().endsWith("_SHULKER_BOX"))
+                || player.getInventory().getItemInOffHand().getType().name().endsWith("_SHULKER_BOX")) {
+            player.sendMessage("[!] 왼손에 아이템이 있으면 셜커 박스를 사용할 수 없습니다!");
             return;
         }
+
         if (openShulker(player, player.getInventory().getItemInMainHand())) event.setCancelled(true);
     }
 
